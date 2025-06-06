@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "73916361478",
+    "project_id": "techupnews-fe902",
+    "storage_bucket": "techupnews-fe902.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73916361478:android:412f684744e1f25dd6cc87",
+        "android_client_info": {
+          "package_name": "com.example.techupnews"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdkH5v6jQ5w0Bsndkl6PmtT2Sah51h61Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
