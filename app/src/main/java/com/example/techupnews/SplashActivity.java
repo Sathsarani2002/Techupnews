@@ -25,7 +25,7 @@ public class SplashActivity extends Activity {
 
         // Navigate to MainActivity after 3 seconds
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             finish();
         }, 3000);
     }
