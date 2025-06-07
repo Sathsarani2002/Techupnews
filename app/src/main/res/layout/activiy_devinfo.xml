@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Root ScrollView to allow scrolling if content overflows the screen -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e5e7eb"
+    android:fillViewport="true">
+
+    <!-- Main LinearLayout to stack all content vertically -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
+
+        <!-- Container for the screen content, styled to mimic the rounded card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_card_background"
+            android:paddingBottom="24dp"
+            android:gravity="center_horizontal"
+            android:elevation="8dp"
+            android:layout_margin="8dp">
+
+            <!-- Header Section: Back Arrow, Title, Home Icon -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <!-- Back Arrow Button -->
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentStart="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_arrow_back"
+                    android:tint="#4B5563"
+                    android:contentDescription="Back" />
+
+                <!-- Screen Title -->
+                <TextView
+                    android:id="@+id/screenTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Dev Info."
+                    android:textSize="20sp"
+                    android:textColor="#1F2937"
+                    android:fontFamily="@font/roboto_bold" />
+
+                <!-- Home Icon Button -->
+                <ImageButton
+                    android:id="@+id/homeButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_home"
+                    android:tint="#4B5563"
+                    android:contentDescription="Home" />
+            </RelativeLayout>
+
+            <!-- Developer Image -->
+            <ImageView
+                android:id="@+id/developerImage"
+                android:layout_width="144dp"
+                android:layout_height="144dp"
+                android:layout_marginTop="24dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/circular_image_background"
+                android:src="@drawable/developer_placeholder"
+                android:contentDescription="Developer Profile Picture"
+                android:elevation="4dp"
+                android:padding="4dp" />
+
+            <!-- Developer Name -->
+            <TextView
+                android:id="@+id/developerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Sathsarani Geethamali"
+                android:textSize="24sp"
+                android:textColor="#1F2937"
+                android:fontFamily="@font/roboto_bold" />
+
+            <!-- App Description/Quote -->
+            <TextView
+                android:id="@+id/appDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:textAlignment="center"
+                android:text="\"This app was created to keep our Faculty of Technology community updated with news and events in a simple and accessible way.\""
+            android:textSize="18sp"
+            android:textColor="#B91C1C"
+            android:fontFamily="@font/roboto_regular"
+            android:lineSpacingExtra="4dp" />
+
+            <!-- Release Version Info -->
+            <TextView
+                android:id="@+id/releaseVersionLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Release Version"
+                android:textSize="20sp"
+                android:textColor="#4B5563" />
+
+            <TextView
+                android:id="@+id/releaseVersionNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Version 1.0"
+                android:textSize="20sp"
+                android:textColor="#1F2937"
+                android:fontFamily="@font/roboto_bold" />
+
+            <!-- Close Button -->
+            <ImageButton
+                android:id="@+id/closeButton"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/circular_yellow_button"
+                android:src="@drawable/ic_close"
+                android:tint="@android:color/white"
+                android:contentDescription="Close"
+                android:elevation="8dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
