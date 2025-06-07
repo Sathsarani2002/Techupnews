@@ -11,42 +11,29 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:background="#F5C45E"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:scaleType="centerInside"
-                android:adjustViewBounds="true"
-                android:src="@drawable/logo" />
-        </LinearLayout>
-
-        <!-- User Info Section -->
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:padding="16dp"
-            android:gravity="center_vertical">
+            android:background="@android:color/white">
 
             <ImageView
                 android:id="@+id/userImage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/user"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="12dp"
                 android:scaleType="centerCrop"
-                android:layout_marginEnd="12dp" />
+                android:src="@drawable/user" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/userInfoTextContainer"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_toEndOf="@id/userImage"
+                android:orientation="vertical"
+                android:layout_centerVertical="true">
 
                 <TextView
                     android:id="@+id/usernameText"
@@ -78,29 +65,38 @@
 
             <ImageView
                 android:id="@+id/closeIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="24px"
+                android:layout_height="24px"
                 android:src="@drawable/ic_close"
-                android:tint="#000000" />
-        </LinearLayout>
+                android:tint="#000000"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true" />
 
-        <!-- Menu Items -->
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:background="@android:color/white">
 
-            <!-- Home -->
             <LinearLayout
+                android:id="@+id/menuItemHome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="8dp">
+                android:paddingVertical="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="24px"
+                    android:layout_height="24px"
                     android:src="@drawable/ic_home"
                     android:tint="#000000"
                     android:layout_marginEnd="12dp" />
@@ -114,17 +110,20 @@
                     android:fontFamily="@font/roboto_bold" />
             </LinearLayout>
 
-            <!-- Sport News -->
             <LinearLayout
+                android:id="@+id/menuItemSportNews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="8dp">
+                android:paddingVertical="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_sport"
+                    android:layout_width="24px"
+                    android:layout_height="24px"
+                    android:src="@drawable/ic_sports"
                     android:tint="#000000"
                     android:layout_marginEnd="12dp" />
 
@@ -137,16 +136,19 @@
                     android:fontFamily="@font/roboto_bold" />
             </LinearLayout>
 
-            <!-- Academic News -->
             <LinearLayout
+                android:id="@+id/menuItemAcademicNews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="8dp">
+                android:paddingVertical="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="24px"
+                    android:layout_height="24px"
                     android:src="@drawable/ic_academic"
                     android:tint="#000000"
                     android:layout_marginEnd="12dp" />
@@ -160,16 +162,19 @@
                     android:fontFamily="@font/roboto_bold" />
             </LinearLayout>
 
-            <!-- Faculty Events News -->
             <LinearLayout
+                android:id="@+id/menuItemFacultyEventsNews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="8dp">
+                android:paddingVertical="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="24px"
+                    android:layout_height="24px"
                     android:src="@drawable/ic_events"
                     android:tint="#000000"
                     android:layout_marginEnd="12dp" />
@@ -183,16 +188,19 @@
                     android:fontFamily="@font/roboto_bold" />
             </LinearLayout>
 
-            <!-- Dev Info -->
             <LinearLayout
+                android:id="@+id/menuItemDevInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="8dp">
+                android:paddingVertical="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="24px"
+                    android:layout_height="24px"
                     android:src="@drawable/ic_info"
                     android:tint="#000000"
                     android:layout_marginEnd="12dp" />
@@ -206,16 +214,19 @@
                     android:fontFamily="@font/roboto_bold" />
             </LinearLayout>
 
-            <!-- Log Out -->
             <LinearLayout
+                android:id="@+id/menuItemLogOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="8dp">
+                android:paddingVertical="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="24px"
+                    android:layout_height="24px"
                     android:src="@drawable/ic_logout"
                     android:tint="#000000"
                     android:layout_marginEnd="12dp" />
