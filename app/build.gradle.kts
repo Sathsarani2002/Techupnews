@@ -1,13 +1,15 @@
 plugins {
     alias(libs.plugins.android.application)
+    // If you use Kotlin, add this line:
+    // alias(libs.plugins.kotlin.android)
 }
 
 android {
-    namespace = "com.example.techupnews"
+    namespace = "com.example.news_screen"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.techupnews"
+        applicationId = "com.example.news_screen"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -25,19 +27,30 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    // Uncomment if using Kotlin
+    // kotlinOptions {
+    //     jvmTarget = "11"
+    // }
 }
 
 dependencies {
+    // Core AndroidX and Material Components
+    implementation(libs.appcompat)          // androidx.appcompat:appcompat
+    implementation(libs.material)           // com.google.android.material:material
+    implementation(libs.activity)           // androidx.activity:activity-ktx or activity
+    implementation(libs.constraintlayout)  // androidx.constraintlayout:constraintlayout
 
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.activity)
-    implementation(libs.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    // ViewPager (if used)
+    implementation(libs.viewpager)          // androidx.viewpager:viewpager
+
+    // Testing libraries
+    testImplementation(libs.junit)          // junit:junit
+    androidTestImplementation(libs.ext.junit)      // androidx.test.ext:junit
+    androidTestImplementation(libs.espresso.core)  // androidx.test.espresso:espresso-core
 }
