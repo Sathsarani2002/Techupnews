@@ -97,8 +97,9 @@
                     android:tint="#FFFFFF" />
             </LinearLayout>
 
-            <!-- Sports Icon -->
+            <!-- Sports Icon Wrapper -->
             <LinearLayout
+                android:id="@+id/sportsButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -122,8 +123,9 @@
                     android:fontFamily="@font/istok_web" />
             </LinearLayout>
 
-            <!-- Academic Icon -->
+            <!-- Academic Icon Wrapper -->
             <LinearLayout
+                android:id="@+id/academicButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -147,8 +149,9 @@
                     android:fontFamily="@font/istok_web" />
             </LinearLayout>
 
-            <!-- Events Icon -->
+            <!-- Events Icon Wrapper -->
             <LinearLayout
+                android:id="@+id/eventsButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
