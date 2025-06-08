@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.google.services)
+    // Removed google-services plugin since no Firebase
 }
 
 android {
@@ -31,6 +31,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -39,11 +43,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
-    // ✅ Firebase Authentication
-    implementation("com.google.firebase:firebase-auth:22.1.2")
-
-    // ✅ Firebase Realtime Database (for DataSnapshot and DatabaseReference)
-    implementation("com.google.firebase:firebase-database:20.3.0")
+    // Removed all Firebase dependencies
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

@@ -2,56 +2,70 @@ package com.example.techupnews;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button btnLogin, btnGoSignup, loginButton;
-    EditText loginUsername, loginPassword;
+    private Button btnLoginToggle, btnSignupToggle, loginButton;
+    private EditText loginUsername, loginPassword;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize UI elements
-        btnLogin = findViewById(R.id.btnLogin);
-        btnGoSignup = findViewById(R.id.btnGoSignup);
+        dbHelper = new DatabaseHelper(this);
+
+        // Initialize views
+        btnLoginToggle = findViewById(R.id.btnLogin);
+        btnSignupToggle = findViewById(R.id.btnGoSignup);
         loginButton = findViewById(R.id.loginButton);
         loginUsername = findViewById(R.id.loginUsername);
         loginPassword = findViewById(R.id.loginPassword);
 
-        // Highlight the login button
-        btnLogin.setSelected(true);
-        btnGoSignup.setSelected(false);
+        // Highlight login tab
+        btnLoginToggle.setSelected(true);
+        btnSignupToggle.setSelected(false);
 
-        // Navigate to SignupActivity when "Go to Signup" is clicked
-        btnGoSignup.setOnClickListener(v -> {
-            btnGoSignup.setSelected(true);
-            btnLogin.setSelected(false);
+        // Toggle to SignupActivity
+        btnSignupToggle.setOnClickListener(v -> {
+            btnSignupToggle.setSelected(true);
+            btnLoginToggle.setSelected(false);
             startActivity(new Intent(this, SignupActivity.class));
             finish();
         });
 
-        // Perform login action when the login button is clicked
+        // Login button logic
         loginButton.setOnClickListener(v -> {
             String username = loginUsername.getText().toString().trim();
             String password = loginPassword.getText().toString().trim();
 
-            if (username.isEmpty() || password.isEmpty()) {
-                loginUsername.setError("Fields cannot be empty!");
-                loginPassword.setError("Fields cannot be empty!");
+            if (TextUtils.isEmpty(username)) {
+                loginUsername.setError("Username is required");
                 return;
             }
 
-            // Add further login validation here
-            // For now, assume successful login
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            if (TextUtils.isEmpty(password)) {
+                loginPassword.setError("Password is required");
+                return;
+            }
+
+            boolean isValid = dbHelper.checkUserCredentials(username, password);
+            if (isValid) {
+                Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

@@ -13,12 +13,15 @@ public class SignupActivity extends AppCompatActivity {
     Button btnSignup, btnGoLogin, signupButton;
     EditText signupUsername, signupEmail, signupPassword, signupConfirm;
 
+    DatabaseHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        // Initialize UI elements
+        dbHelper = new DatabaseHelper(this);
+
         btnSignup = findViewById(R.id.btnSignup);
         btnGoLogin = findViewById(R.id.btnGoLogin);
         signupButton = findViewById(R.id.signupButton);
@@ -27,11 +30,9 @@ public class SignupActivity extends AppCompatActivity {
         signupPassword = findViewById(R.id.signupPassword);
         signupConfirm = findViewById(R.id.signupConfirm);
 
-        // Highlight the signup button
         btnSignup.setSelected(true);
         btnGoLogin.setSelected(false);
 
-        // Navigate to LoginActivity when "Go to Login" is clicked
         btnGoLogin.setOnClickListener(v -> {
             btnGoLogin.setSelected(true);
             btnSignup.setSelected(false);
@@ -39,7 +40,6 @@ public class SignupActivity extends AppCompatActivity {
             finish();
         });
 
-        // Show a message when the signup button is clicked
         signupButton.setOnClickListener(v -> {
             String username = signupUsername.getText().toString().trim();
             String email = signupEmail.getText().toString().trim();
@@ -56,7 +56,19 @@ public class SignupActivity extends AppCompatActivity {
                 return;
             }
 
-            Toast.makeText(this, "Signup successful!", Toast.LENGTH_SHORT).show();
+            if (dbHelper.checkUsernameExists(username)) {
+                Toast.makeText(this, "Username already exists", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            boolean inserted = dbHelper.insertUser(username, email, password);
+            if (inserted) {
+                Toast.makeText(this, "Signup successful", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+            } else {
+                Toast.makeText(this, "Signup failed", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }
