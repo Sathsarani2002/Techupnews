@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
-    // Removed google-services plugin since no Firebase
+    alias(libs.plugins.google.services) // Added Firebase plugin
 }
 
 android {
@@ -43,8 +43,11 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
-
-    // Removed all Firebase dependencies
+    // Firebase dependencies
+    implementation(libs.firebase.bom)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

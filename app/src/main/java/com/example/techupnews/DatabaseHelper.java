@@ -137,4 +137,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SharedPreferences prefs = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
         return prefs.getString("logged_in_username", null);
     }
+
+    public void logoutUser(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        prefs.edit().remove("logged_in_username").apply();
+    }
 }

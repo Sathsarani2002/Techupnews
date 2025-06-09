@@ -1,5 +1,6 @@
 package com.example.techupnews;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +12,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -69,9 +68,43 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
             if (context != null) {
                 Intent intent = new Intent(context, EditProfileActivity.class);
                 startActivity(intent);
-                dismiss();  // close the bottom sheet after launching activity
+                dismiss();
             }
         });
+
+        // Dev Info click listener to open DevInfoActivity
+        View menuDevInfo = view.findViewById(R.id.menuDevInfo);
+        menuDevInfo.setOnClickListener(v -> {
+            if (context != null) {
+                Intent intent = new Intent(context, DevInfoActivity.class);
+                startActivity(intent);
+                dismiss();
+            }
+        });
+
+        // Logout button click listener
+        View logoutButton = view.findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(v -> {
+            if (context != null) {
+                new AlertDialog.Builder(context)
+                        .setTitle("Logout")
+                        .setMessage("Are you sure you want to logout?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            // Perform logout
+                            DatabaseHelper dbHelper = new DatabaseHelper(context);
+                            dbHelper.logoutUser(context);
+
+                            // Navigate to LoginActivity
+                            Intent intent = new Intent(context, LoginActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            dismiss();
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+            }
+        });
+
 
         return view;
     }
