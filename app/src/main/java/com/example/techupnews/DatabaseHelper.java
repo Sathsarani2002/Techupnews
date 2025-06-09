@@ -40,7 +40,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Insert a new user
     public boolean insertUser(String username, String email, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -52,7 +51,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    // Check if username exists
     public boolean checkUsernameExists(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_USERS,
@@ -66,7 +64,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exists;
     }
 
-    // Verify login credentials
     public boolean checkUserCredentials(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_USERS,
@@ -80,7 +77,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return valid;
     }
 
-    // Fetch user details
     public String[] getUserDetails(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_USERS,
@@ -102,13 +98,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    // Save logged-in username to shared preferences
+    public String getPassword(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_USERS,
+                new String[]{COL_PASSWORD},
+                COL_USERNAME + "=?",
+                new String[]{username},
+                null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            String password = cursor.getString(cursor.getColumnIndexOrThrow(COL_PASSWORD));
+            cursor.close();
+            db.close();
+            return password;
+        }
+        if (cursor != null) cursor.close();
+        db.close();
+        return null;
+    }
+
+    public boolean updateUserDetails(String oldUsername, String newUsername, String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_USERNAME, newUsername);
+        values.put(COL_EMAIL, email);
+        values.put(COL_PASSWORD, password);
+
+        int rowsUpdated = db.update(TABLE_USERS, values, COL_USERNAME + "=?", new String[]{oldUsername});
+        db.close();
+        return rowsUpdated > 0;
+    }
+
     public void saveLoggedInUser(Context context, String username) {
         SharedPreferences prefs = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
         prefs.edit().putString("logged_in_username", username).apply();
     }
 
-    // Retrieve logged-in username from shared preferences
     public String getLoggedInUser(Context context) {
         SharedPreferences prefs = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
         return prefs.getString("logged_in_username", null);
