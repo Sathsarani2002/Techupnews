@@ -35,8 +35,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Toggle to SignupActivity
         btnSignupToggle.setOnClickListener(v -> {
-            btnSignupToggle.setSelected(true);
-            btnLoginToggle.setSelected(false);
             startActivity(new Intent(this, SignupActivity.class));
             finish();
         });
@@ -50,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
                 loginUsername.setError("Username is required");
                 return;
             }
-
             if (TextUtils.isEmpty(password)) {
                 loginPassword.setError("Password is required");
                 return;
@@ -58,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
             boolean isValid = dbHelper.checkUserCredentials(username, password);
             if (isValid) {
+                dbHelper.saveLoggedInUser(this, username);
                 Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

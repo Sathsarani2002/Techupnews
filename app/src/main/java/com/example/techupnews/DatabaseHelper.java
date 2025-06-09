@@ -2,6 +2,7 @@ package com.example.techupnews;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -35,56 +36,81 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // For now just drop and recreate table on upgrade
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         onCreate(db);
     }
 
-    // Insert a new user, return true if successful, false if username exists
+    // Insert a new user
     public boolean insertUser(String username, String email, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(COL_USERNAME, username);
         values.put(COL_EMAIL, email);
         values.put(COL_PASSWORD, password);
-
         long result = db.insert(TABLE_USERS, null, values);
         db.close();
-        return result != -1; // -1 means error (likely username conflict)
+        return result != -1;
     }
 
     // Check if username exists
     public boolean checkUsernameExists(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
-
         Cursor cursor = db.query(TABLE_USERS,
                 new String[]{COL_ID},
                 COL_USERNAME + "=?",
                 new String[]{username},
                 null, null, null);
-
         boolean exists = (cursor.getCount() > 0);
         cursor.close();
         db.close();
-
         return exists;
     }
 
-    // Verify login credentials: returns true if username & password match
+    // Verify login credentials
     public boolean checkUserCredentials(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-
         Cursor cursor = db.query(TABLE_USERS,
                 new String[]{COL_ID},
                 COL_USERNAME + "=? AND " + COL_PASSWORD + "=?",
                 new String[]{username, password},
                 null, null, null);
-
         boolean valid = (cursor.getCount() > 0);
         cursor.close();
         db.close();
-
         return valid;
+    }
+
+    // Fetch user details
+    public String[] getUserDetails(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_USERS,
+                new String[]{COL_USERNAME, COL_EMAIL},
+                COL_USERNAME + "=?",
+                new String[]{username},
+                null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            String[] userDetails = {
+                    cursor.getString(cursor.getColumnIndexOrThrow(COL_USERNAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COL_EMAIL))
+            };
+            cursor.close();
+            db.close();
+            return userDetails;
+        }
+        if (cursor != null) cursor.close();
+        db.close();
+        return null;
+    }
+
+    // Save logged-in username to shared preferences
+    public void saveLoggedInUser(Context context, String username) {
+        SharedPreferences prefs = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        prefs.edit().putString("logged_in_username", username).apply();
+    }
+
+    // Retrieve logged-in username from shared preferences
+    public String getLoggedInUser(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        return prefs.getString("logged_in_username", null);
     }
 }

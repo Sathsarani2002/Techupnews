@@ -42,13 +42,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showUserProfileBottomSheet() {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        View sheetView = LayoutInflater.from(this).inflate(R.layout.user_profile_bottom_sheet, null);
-        bottomSheetDialog.setContentView(sheetView);
-
-        ImageView closeBtn = sheetView.findViewById(R.id.closeButton);
-        closeBtn.setOnClickListener(v -> bottomSheetDialog.dismiss());
-
-        bottomSheetDialog.show();
+        UserProfileBottomSheet bottomSheet = new UserProfileBottomSheet();
+        bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
     }
 }
