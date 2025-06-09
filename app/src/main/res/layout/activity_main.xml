@@ -58,10 +58,10 @@
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_below="@id/newsTitle"
-        android:layout_marginTop="8dp"
-        android:layout_above="@id/bottomNavWrapper" />
+        android:layout_above="@id/bottomNavWrapper"
+        android:layout_marginTop="8dp" />
 
     <!-- Bottom Navigation -->
     <RelativeLayout
@@ -99,6 +99,7 @@
 
             <!-- Sports Icon -->
             <LinearLayout
+                android:id="@+id/iconSportsWrapper"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -124,6 +125,7 @@
 
             <!-- Academic Icon -->
             <LinearLayout
+                android:id="@+id/iconAcademicWrapper"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -149,6 +151,7 @@
 
             <!-- Events Icon -->
             <LinearLayout
+                android:id="@+id/iconEventsWrapper"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -174,6 +177,7 @@
 
             <!-- Home Icon -->
             <LinearLayout
+                android:id="@+id/iconHomeWrapper"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

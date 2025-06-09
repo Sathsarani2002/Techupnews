@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.news_screen.R;
+import com.example.techupnews.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -24,7 +24,7 @@ public class UserBottomSheetFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(com.example.news_screen.R.layout.user_profile_bottom_sheet, container, false);
+        return inflater.inflate(R.layout.user_profile_bottom_sheet, container, false);
     }
 
     @Override

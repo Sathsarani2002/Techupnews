@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
+
+        <!-- Header -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="16dp">
+
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentStart="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Back"
+                android:src="@drawable/ic_back"
+                android:tint="#000000" />
+
+            <TextView
+                android:id="@+id/screenTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Dev Info."
+                android:textSize="32sp"
+                android:textColor="#000000"
+                android:fontFamily="@font/roboto_bold" />
+
+            <ImageButton
+                android:id="@+id/homeButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Home"
+                android:src="@drawable/ic_home"
+                android:tint="#000000" />
+        </RelativeLayout>
+
+        <!-- Developer Image -->
+        <ImageView
+            android:id="@+id/developerImage"
+            android:layout_width="176dp"
+            android:layout_height="176dp"
+            android:layout_marginTop="24dp"
+            android:contentDescription="Developer Photo"
+            android:scaleType="centerCrop"
+            android:src="@drawable/me" />
+
+        <!-- Name -->
+        <TextView
+            android:id="@+id/developerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Sathsarani Geethamali"
+            android:textColor="#102E50"
+            android:textSize="24sp" />
+
+        <!-- Statement -->
+        <TextView
+            android:id="@+id/personalStatement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:paddingHorizontal="24dp"
+            android:text="This app was created to keep our Faculty of Technology community updated with news and events in a simple and accessible way."
+            android:textAlignment="center"
+            android:textColor="#BE3D2A"
+            android:textSize="24sp"
+            android:fontFamily="@font/labrada_regular"
+            android:lineSpacingExtra="6dp" />
+
+        <!-- Version Info -->
+        <TextView
+            android:id="@+id/versionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Release Version"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:fontFamily="@font/labrada_regular" />
+
+        <TextView
+            android:id="@+id/versionNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Version 1.0"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:fontFamily="@font/labrada_regular" />
+
+        <!-- Close Button -->
+        <ImageButton
+            android:id="@+id/closeButton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="#F5C45E"
+            android:background="@drawable/circular_yellow_button"
+            android:contentDescription="Close"
+            android:elevation="8dp"
+            android:src="@drawable/ic_close"
+            android:tint="@android:color/black" />
+
+    </LinearLayout>
+</ScrollView>

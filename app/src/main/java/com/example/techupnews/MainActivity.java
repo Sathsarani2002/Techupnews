@@ -1,17 +1,19 @@
 package com.example.techupnews;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.news_screen.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView iconMenu, iconHome, iconSports, iconAcademic, iconEvents;
     TextView newsTitle;
+    ImageView iconMenu, iconSports, iconAcademic, iconEvents, iconHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,26 +21,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initialize views
+        newsTitle = findViewById(R.id.newsTitle);
+
         iconMenu = findViewById(R.id.iconMenu);
-        iconHome = findViewById(R.id.iconHome);
         iconSports = findViewById(R.id.iconSports);
         iconAcademic = findViewById(R.id.iconAcademic);
         iconEvents = findViewById(R.id.iconEvents);
-        newsTitle = findViewById(R.id.newsTitle);
+        iconHome = findViewById(R.id.iconHome);
 
-        // Set initial title to "Sports"
+        // Set default title
         newsTitle.setText("Sports");
 
-        // Set click listeners for bottom nav icons
-        iconHome.setOnClickListener(v -> newsTitle.setText("Sports"));
+        // Set click listeners
+        iconMenu.setOnClickListener(v -> showUserProfileBottomSheet());
+
         iconSports.setOnClickListener(v -> newsTitle.setText("Sports"));
         iconAcademic.setOnClickListener(v -> newsTitle.setText("Academic"));
         iconEvents.setOnClickListener(v -> newsTitle.setText("Events"));
+        iconHome.setOnClickListener(v -> newsTitle.setText("Sports"));
+    }
 
-        // Show user profile bottom sheet when menu icon is clicked
-        iconMenu.setOnClickListener(v -> {
-            UserProfileBottomSheet bottomSheet = new UserProfileBottomSheet();
-            bottomSheet.show(getSupportFragmentManager(), "UserProfileBottomSheet");
-        });
+    private void showUserProfileBottomSheet() {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        View sheetView = LayoutInflater.from(this).inflate(R.layout.user_profile_bottom_sheet, null);
+        bottomSheetDialog.setContentView(sheetView);
+
+        ImageView closeBtn = sheetView.findViewById(R.id.closeButton);
+        closeBtn.setOnClickListener(v -> bottomSheetDialog.dismiss());
+
+        bottomSheetDialog.show();
     }
 }
