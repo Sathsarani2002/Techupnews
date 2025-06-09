@@ -2,6 +2,7 @@ package com.example.techupnews;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,6 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_profile_bottom_sheet, container, false);
 
-        // Fetch user details
         Context context = getContext();
         if (context != null) {
             DatabaseHelper dbHelper = new DatabaseHelper(context);
@@ -62,6 +62,16 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
         // Close button listener
         ImageView closeButton = view.findViewById(R.id.closeButton);
         closeButton.setOnClickListener(v -> dismiss());
+
+        // Edit Profile click listener to open EditProfileActivity
+        TextView editProfile = view.findViewById(R.id.editProfile);
+        editProfile.setOnClickListener(v -> {
+            if (context != null) {
+                Intent intent = new Intent(context, EditProfileActivity.class);
+                startActivity(intent);
+                dismiss();  // close the bottom sheet after launching activity
+            }
+        });
 
         return view;
     }
