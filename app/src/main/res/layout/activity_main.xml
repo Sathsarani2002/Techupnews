@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/homeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
@@ -33,15 +32,19 @@
             android:scaleType="fitCenter" />
     </RelativeLayout>
 
-    <!-- Carousel -->
-    <androidx.viewpager.widget.ViewPager
+    <!-- Image Carousel -->
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/imageSlider"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_below="@id/header"
-        android:layout_marginTop="-40dp" />
+        android:layout_marginTop="-40dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp" />
 
-    <!-- Title Text -->
+    <!-- News Title -->
     <TextView
         android:id="@+id/newsTitle"
         android:layout_width="wrap_content"
@@ -54,7 +57,7 @@
         android:textColor="#102E50"
         android:fontFamily="@font/katibeh" />
 
-    <!-- Fragment container for news content -->
+    <!-- Fragment Container -->
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
