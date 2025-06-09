@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
+
     // Removed all Firebase dependencies
 
     testImplementation(libs.junit)
