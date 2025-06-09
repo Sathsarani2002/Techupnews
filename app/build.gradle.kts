@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.google.services) // Added Firebase plugin
+    alias(libs.plugins.google.services) // Firebase plugin
 }
 
 android {
@@ -42,13 +42,15 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.viewpager2) // Added ViewPager2
 
-    // Firebase dependencies
+    // Firebase
     implementation(libs.firebase.bom)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
 
+    // Unit Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
