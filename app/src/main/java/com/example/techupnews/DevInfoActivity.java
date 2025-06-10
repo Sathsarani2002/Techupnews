@@ -1,11 +1,10 @@
 package com.example.techupnews;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 public class DevInfoActivity extends AppCompatActivity {
 
@@ -16,19 +15,19 @@ public class DevInfoActivity extends AppCompatActivity {
 
         // Close button functionality
         ImageView closeButton = findViewById(R.id.closeButton);
-        closeButton.setOnClickListener(v -> finishWithBottomSheet());
+        closeButton.setOnClickListener(v -> navigateToMainActivity());
     }
 
     @Override
     public void onBackPressed() {
-        finishWithBottomSheet(); // Move back to the UserProfileBottomSheet when back button is pressed
+        navigateToMainActivity(); // Go back to the MainActivity when back button is pressed
     }
 
-    private void finishWithBottomSheet() {
-        // Show the UserProfileBottomSheet before finishing
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        UserProfileBottomSheet userProfileBottomSheet = new UserProfileBottomSheet();
-        userProfileBottomSheet.show(fragmentManager, userProfileBottomSheet.getTag());
+    private void navigateToMainActivity() {
+        // Navigate to MainActivity ensuring it is in the correct state
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
 
         // Finish the current activity
         finish();

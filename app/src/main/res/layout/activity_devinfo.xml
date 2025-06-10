@@ -42,12 +42,12 @@
 
             <ImageButton
                 android:id="@+id/homeButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_alignParentEnd="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Home"
-                android:src="@drawable/ic_home"
+                android:src="@drawable/icons_home"
                 android:tint="#000000" />
         </RelativeLayout>
 
