@@ -3,7 +3,6 @@ package com.example.techupnews;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         imageSlider.setClipToPadding(false);
         imageSlider.setClipChildren(false);
         imageSlider.setOffscreenPageLimit(3);
-        imageSlider.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
+        imageSlider.getChildAt(0).setOverScrollMode(ViewPager2.OVER_SCROLL_NEVER);
 
         int offset = 50;
         float density = getResources().getDisplayMetrics().density;
@@ -147,6 +146,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void showUserProfileBottomSheet() {
         UserProfileBottomSheet bottomSheet = new UserProfileBottomSheet();
+
+        // Set listener for category selection from bottom sheet
+        bottomSheet.setCategorySelectionListener(category -> loadNews(category));
+
         bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
     }
 }

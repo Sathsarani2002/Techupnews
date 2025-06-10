@@ -12,13 +12,25 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class UserProfileBottomSheet extends BottomSheetDialogFragment {
+
+    public interface CategorySelectionListener {
+        void onCategorySelected(String category);
+    }
+
+    private CategorySelectionListener categorySelectionListener;
+
+    public void setCategorySelectionListener(CategorySelectionListener listener) {
+        this.categorySelectionListener = listener;
+    }
 
     @NonNull
     @Override
@@ -58,11 +70,40 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
             }
         }
 
-        // Close button listener
+        // Category click listeners that notify MainActivity via the listener
+        view.findViewById(R.id.menuSports).setOnClickListener(v -> {
+            if (categorySelectionListener != null) {
+                categorySelectionListener.onCategorySelected("Sports");
+            }
+            dismiss();
+        });
+
+        view.findViewById(R.id.menuAcademic).setOnClickListener(v -> {
+            if (categorySelectionListener != null) {
+                categorySelectionListener.onCategorySelected("Academic");
+            }
+            dismiss();
+        });
+
+        view.findViewById(R.id.menuEvents).setOnClickListener(v -> {
+            if (categorySelectionListener != null) {
+                categorySelectionListener.onCategorySelected("Events");
+            }
+            dismiss();
+        });
+
+        view.findViewById(R.id.menuHome).setOnClickListener(v -> {
+            if (categorySelectionListener != null) {
+                categorySelectionListener.onCategorySelected("Sports"); // Home -> Sports
+            }
+            dismiss();
+        });
+
+        // Close button
         ImageView closeButton = view.findViewById(R.id.closeButton);
         closeButton.setOnClickListener(v -> dismiss());
 
-        // Edit Profile click listener to open EditProfileActivity
+        // Edit Profile opens EditProfileActivity
         TextView editProfile = view.findViewById(R.id.editProfile);
         editProfile.setOnClickListener(v -> {
             if (context != null) {
@@ -72,7 +113,7 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
-        // Dev Info click listener to open DevInfoActivity
+        // Dev Info opens DevInfoActivity
         View menuDevInfo = view.findViewById(R.id.menuDevInfo);
         menuDevInfo.setOnClickListener(v -> {
             if (context != null) {
@@ -82,7 +123,7 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
-        // Logout button click listener
+        // Logout with confirmation dialog
         View logoutButton = view.findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(v -> {
             if (context != null) {
@@ -90,11 +131,9 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
                         .setTitle("Logout")
                         .setMessage("Are you sure you want to logout?")
                         .setPositiveButton("Yes", (dialog, which) -> {
-                            // Perform logout
                             DatabaseHelper dbHelper = new DatabaseHelper(context);
                             dbHelper.logoutUser(context);
 
-                            // Navigate to LoginActivity
                             Intent intent = new Intent(context, LoginActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
@@ -104,7 +143,6 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
                         .show();
             }
         });
-
 
         return view;
     }
