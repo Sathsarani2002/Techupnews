@@ -14,6 +14,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView newsTitle;
@@ -66,34 +68,25 @@ public class MainActivity extends AppCompatActivity {
         // SQLite & RecyclerView
         dbHelper = new NewsDatabaseHelper(this);
         newsRecycler.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new NewsAdapter(this, dbHelper.getNewsByCategory("Sports"));
+        adapter = new NewsAdapter(this, new ArrayList<>());
         newsRecycler.setAdapter(adapter);
 
-        // Default title
-        newsTitle.setText("Sports");
+        // Load Default Category
+        loadNews("Sports");
 
         // Button Clicks
         iconMenu.setOnClickListener(v -> showUserProfileBottomSheet());
 
-        iconSports.setOnClickListener(v -> {
-            newsTitle.setText("Sports");
-            adapter.updateList(dbHelper.getNewsByCategory("Sports"));
-        });
+        iconSports.setOnClickListener(v -> loadNews("Sports"));
+        iconAcademic.setOnClickListener(v -> loadNews("Academic"));
+        iconEvents.setOnClickListener(v -> loadNews("Events"));
+        iconHome.setOnClickListener(v -> loadNews("Sports"));
+    }
 
-        iconAcademic.setOnClickListener(v -> {
-            newsTitle.setText("Academic");
-            adapter.updateList(dbHelper.getNewsByCategory("Academic"));
-        });
-
-        iconEvents.setOnClickListener(v -> {
-            newsTitle.setText("Events");
-            adapter.updateList(dbHelper.getNewsByCategory("Events"));
-        });
-
-        iconHome.setOnClickListener(v -> {
-            newsTitle.setText("Sports");
-            adapter.updateList(dbHelper.getNewsByCategory("Sports"));
-        });
+    private void loadNews(String category) {
+        newsTitle.setText(category);
+        ArrayList<News> newsList = dbHelper.getNewsByCategory(category);
+        adapter.updateList(newsList);
     }
 
     private void configureViewPager() {
