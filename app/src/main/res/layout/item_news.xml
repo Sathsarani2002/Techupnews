@@ -1,0 +1,29 @@
+<!-- res/layout/item_news.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <ImageView
+        android:id="@+id/newsImage"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginEnd="12dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image1"
+        android:background="@drawable/rounded_image_bg"
+        android:clipToOutline="true" />
+
+
+    <TextView
+        android:id="@+id/newsDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Sample description"
+        android:textColor="#102E50"
+        android:textSize="12sp"
+        android:fontFamily="@font/kdam_thmor_pro"
+        android:maxLines="3" />
+</LinearLayout>

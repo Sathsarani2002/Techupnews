@@ -44,15 +44,47 @@
         android:paddingStart="50dp"
         android:paddingEnd="50dp" />
 
+
     <!-- TabLayout for dots indicator -->
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabIndicator"
+    <!-- Manual Dot Indicators (Non-functional) -->
+    <LinearLayout
+        android:id="@+id/dotIndicators"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageSlider"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:theme="@style/Widget.MaterialComponents.TabLayout" />
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <!-- Small balls -->
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginHorizontal="4dp"
+            android:background="@drawable/rounded_dot" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginHorizontal="4dp"
+            android:background="@drawable/rounded_dot" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginHorizontal="4dp"
+            android:background="@drawable/rounded_dot" />
+    </LinearLayout>
+
+    <View
+    android:id="@+id/ashLine"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_below="@id/dotIndicators"
+    android:layout_marginTop="8dp"
+    android:background="#B0B0B0" />
+
 
 
     <!-- News Title -->
@@ -61,21 +93,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageSlider"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="24dp"
         android:text="Sports"
         android:textSize="36sp"
         android:textColor="#102E50"
         android:fontFamily="@font/katibeh" />
 
-    <!-- Fragment Container -->
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
+    <!-- RecyclerView to show news -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/newsRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@id/newsTitle"
         android:layout_above="@id/bottomNavWrapper"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="16dp"
+        android:padding="16dp"
+        android:clipToPadding="false"
+        android:layout_weight="1"
+        android:scrollbars="vertical" />
 
     <!-- Bottom Navigation -->
     <RelativeLayout
