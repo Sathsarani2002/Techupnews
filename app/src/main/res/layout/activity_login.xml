@@ -122,14 +122,14 @@
                         android:background="@drawable/rounded_edittext"
                         android:textSize="14sp" />
 
-                    <ImageView
-                        android:id="@+id/loginEye"
+                    <ImageButton
+                        android:id="@+id/btnTogglePasswordVisibility"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="12dp"
-                        android:src="@drawable/ic_visibility_off"
+                        android:background="@drawable/ic_visibility_off"
                         android:alpha="0.87" />
                 </RelativeLayout>
             </LinearLayout>

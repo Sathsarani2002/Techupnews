@@ -3,8 +3,10 @@ package com.example.techupnews;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button btnLoginToggle, btnSignupToggle, loginButton;
     private EditText loginUsername, loginPassword;
+    private ImageButton btnTogglePasswordVisibility;
+    private boolean isPasswordVisible = false;
     private DatabaseHelper dbHelper;
 
     @Override
@@ -28,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         loginUsername = findViewById(R.id.loginUsername);
         loginPassword = findViewById(R.id.loginPassword);
+        btnTogglePasswordVisibility = findViewById(R.id.btnTogglePasswordVisibility);
 
         // Highlight login tab
         btnLoginToggle.setSelected(true);
@@ -37,6 +42,22 @@ public class LoginActivity extends AppCompatActivity {
         btnSignupToggle.setOnClickListener(v -> {
             startActivity(new Intent(this, SignupActivity.class));
             finish();
+        });
+
+        // Toggle password visibility
+        btnTogglePasswordVisibility.setOnClickListener(v -> {
+            if (isPasswordVisible) {
+                // Hide password
+                loginPassword.setTransformationMethod(new PasswordTransformationMethod());
+                btnTogglePasswordVisibility.setImageResource(R.drawable.ic_visibility_off); // Update icon
+            } else {
+                // Show password
+                loginPassword.setTransformationMethod(null);
+                btnTogglePasswordVisibility.setImageResource(R.drawable.ic_visibility); // Update icon
+            }
+            isPasswordVisible = !isPasswordVisible;
+            // Move the cursor to the end of the text
+            loginPassword.setSelection(loginPassword.getText().length());
         });
 
         // Login button logic
