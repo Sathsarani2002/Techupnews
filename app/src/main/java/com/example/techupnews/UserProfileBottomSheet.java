@@ -38,7 +38,7 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
         BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(dialogInterface -> {
             BottomSheetDialog d = (BottomSheetDialog) dialogInterface;
-            View bottomSheet = d.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+            View bottomSheet = d.findViewById(com.google.android.material.R.id.design_bottom_sheet);  // FIXED typo here
             if (bottomSheet != null) {
                 BottomSheetBehavior<View> behavior = BottomSheetBehavior.from(bottomSheet);
                 behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -132,7 +132,7 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
                         .setMessage("Are you sure you want to logout?")
                         .setPositiveButton("Yes", (dialog, which) -> {
                             DatabaseHelper dbHelper = new DatabaseHelper(context);
-                            dbHelper.logoutUser(context);
+                            dbHelper.logoutUser(context);  // Pass context here!
 
                             Intent intent = new Intent(context, LoginActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

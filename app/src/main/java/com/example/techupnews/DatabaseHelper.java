@@ -116,7 +116,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    // Updated method with username existence check
     public boolean updateUserDetails(String oldUsername, String newUsername, String email, String password) {
+        // Check if new username is different and already exists in DB
+        if (!oldUsername.equals(newUsername) && checkUsernameExists(newUsername)) {
+            // Username already taken, don't update
+            return false;
+        }
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL_USERNAME, newUsername);

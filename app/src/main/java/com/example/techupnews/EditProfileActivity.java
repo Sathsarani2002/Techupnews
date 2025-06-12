@@ -25,6 +25,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private Uri selectedImageUri;
     private boolean isPasswordVisible = false;
 
+    private String currentUsername; // To store logged-in user before editing
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,7 @@ public class EditProfileActivity extends AppCompatActivity {
         ImageButton backButton = findViewById(R.id.backButton);
         ImageButton closeButton = findViewById(R.id.closeButton);
         ImageButton changeProfileImageButton = findViewById(R.id.changeProfileImageButton);
-        ImageButton togglePasswordButton = findViewById(R.id.togglePasswordVisibilityButton); // Correct ID here
+        ImageButton togglePasswordButton = findViewById(R.id.togglePasswordVisibilityButton);
 
         loadUserData();
 
@@ -52,31 +54,33 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void togglePasswordVisibility() {
         if (isPasswordVisible) {
-            // Hide password
             passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             isPasswordVisible = false;
         } else {
-            // Show password
             passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
             isPasswordVisible = true;
         }
-        // Move cursor to the end
         passwordEditText.setSelection(passwordEditText.length());
     }
 
     private void loadUserData() {
-        String loggedInUsername = databaseHelper.getLoggedInUser(this);
-        if (loggedInUsername == null) {
+        currentUsername = databaseHelper.getLoggedInUser(this);
+        if (currentUsername == null) {
             Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
-        String[] userDetails = databaseHelper.getUserDetails(loggedInUsername);
+        String[] userDetails = databaseHelper.getUserDetails(currentUsername);
         if (userDetails != null) {
             usernameEditText.setText(userDetails[0]);
             emailEditText.setText(userDetails[1]);
-            passwordEditText.setText(""); // For security, don't preload password
+
+            // Preload the password
+            String password = databaseHelper.getPassword(currentUsername);
+            if (password != null) {
+                passwordEditText.setText(password);
+            }
         } else {
             Toast.makeText(this, "Failed to load user data!", Toast.LENGTH_SHORT).show();
             finish();
@@ -113,9 +117,10 @@ public class EditProfileActivity extends AppCompatActivity {
             return;
         }
 
-        boolean updated = databaseHelper.updateUserDetails(newUsername, newUsername, newEmail, newPassword);
+        boolean updated = databaseHelper.updateUserDetails(currentUsername, newUsername, newEmail, newPassword);
         if (updated) {
             Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+            currentUsername = newUsername;  // Update currentUsername if username changed
             finish();
         } else {
             Toast.makeText(this, "Failed to update profile!", Toast.LENGTH_SHORT).show();
