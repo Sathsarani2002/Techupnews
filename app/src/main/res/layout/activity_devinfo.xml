@@ -71,6 +71,16 @@
             android:text="Sathsarani Geethamali"
             android:textColor="#102E50"
             android:textSize="24sp" />
+        <TextView
+            android:id="@+id/developerIndex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Student No:2022t01547"
+            android:textColor="#102E50"
+            android:textSize="24sp" />
+
 
         <!-- Statement -->
         <TextView
