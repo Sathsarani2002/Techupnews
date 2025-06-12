@@ -145,7 +145,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return prefs.getString("logged_in_username", null);
     }
 
-    public void logoutUser(Context context) {
+    // Renamed logoutUser to clearLoggedInUser to fix your error
+    public void clearLoggedInUser(Context context) {
         SharedPreferences prefs = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
         prefs.edit().remove("logged_in_username").apply();
     }

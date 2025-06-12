@@ -15,12 +15,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class UserProfileBottomSheet extends BottomSheetDialogFragment {
+
+    private static final int REQUEST_EDIT_PROFILE = 1001;  // Request code for EditProfileActivity
 
     public interface CategorySelectionListener {
         void onCategorySelected(String category);
@@ -38,7 +42,7 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
         BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(dialogInterface -> {
             BottomSheetDialog d = (BottomSheetDialog) dialogInterface;
-            View bottomSheet = d.findViewById(com.google.android.material.R.id.design_bottom_sheet);  // FIXED typo here
+            View bottomSheet = d.findViewById(com.google.android.material.R.id.design_bottom_sheet);
             if (bottomSheet != null) {
                 BottomSheetBehavior<View> behavior = BottomSheetBehavior.from(bottomSheet);
                 behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -56,21 +60,10 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
 
         Context context = getContext();
         if (context != null) {
-            DatabaseHelper dbHelper = new DatabaseHelper(context);
-            String loggedInUsername = dbHelper.getLoggedInUser(context);
-            if (loggedInUsername != null) {
-                String[] userDetails = dbHelper.getUserDetails(loggedInUsername);
-                if (userDetails != null) {
-                    TextView usernameTextView = view.findViewById(R.id.username);
-                    TextView emailTextView = view.findViewById(R.id.email);
-
-                    usernameTextView.setText(userDetails[0]);
-                    emailTextView.setText(userDetails[1]);
-                }
-            }
+            loadUserData(view, context);
         }
 
-        // Category click listeners that notify MainActivity via the listener
+        // Category click listeners
         view.findViewById(R.id.menuSports).setOnClickListener(v -> {
             if (categorySelectionListener != null) {
                 categorySelectionListener.onCategorySelected("Sports");
@@ -103,13 +96,13 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
         ImageView closeButton = view.findViewById(R.id.closeButton);
         closeButton.setOnClickListener(v -> dismiss());
 
-        // Edit Profile opens EditProfileActivity
+        // Edit Profile opens EditProfileActivity for result
         TextView editProfile = view.findViewById(R.id.editProfile);
         editProfile.setOnClickListener(v -> {
             if (context != null) {
                 Intent intent = new Intent(context, EditProfileActivity.class);
-                startActivity(intent);
-                dismiss();
+                startActivityForResult(intent, REQUEST_EDIT_PROFILE);
+                // Do NOT dismiss here so we can refresh data on return
             }
         });
 
@@ -132,8 +125,7 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
                         .setMessage("Are you sure you want to logout?")
                         .setPositiveButton("Yes", (dialog, which) -> {
                             DatabaseHelper dbHelper = new DatabaseHelper(context);
-                            dbHelper.logoutUser(context);  // Pass context here!
-
+                            dbHelper.clearLoggedInUser(context);
                             Intent intent = new Intent(context, LoginActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
@@ -147,14 +139,51 @@ public class UserProfileBottomSheet extends BottomSheetDialogFragment {
         return view;
     }
 
+    private void loadUserData(View view, Context context) {
+        DatabaseHelper databaseHelper = new DatabaseHelper(context);
+        String loggedInUsername = databaseHelper.getLoggedInUser(context);
+        if (loggedInUsername != null) {
+            String[] userDetails = databaseHelper.getUserDetails(loggedInUsername);
+            if (userDetails != null) {
+                TextView usernameTextView = view.findViewById(R.id.username);
+                TextView emailTextView = view.findViewById(R.id.email);
+                usernameTextView.setText(userDetails[0]);
+                emailTextView.setText(userDetails[1]);
+            }
+        }
+    }
+
     @Override
-    public void onStart() {
-        super.onStart();
-        Dialog dialog = getDialog();
-        if (dialog != null && dialog.getWindow() != null) {
-            Window window = dialog.getWindow();
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+    public void onResume() {
+        super.onResume();
+
+        View view = getView();
+        Context context = getContext();
+        if (view != null && context != null) {
+            loadUserData(view, context);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_EDIT_PROFILE && resultCode == AppCompatActivity.RESULT_OK && data != null) {
+            String updatedUsername = data.getStringExtra("username");
+            String updatedEmail = data.getStringExtra("email");
+
+            View view = getView();
+            if (view != null) {
+                TextView usernameTextView = view.findViewById(R.id.username);
+                TextView emailTextView = view.findViewById(R.id.email);
+
+                if (updatedUsername != null) {
+                    usernameTextView.setText(updatedUsername);
+                }
+                if (updatedEmail != null) {
+                    emailTextView.setText(updatedEmail);
+                }
+            }
         }
     }
 }

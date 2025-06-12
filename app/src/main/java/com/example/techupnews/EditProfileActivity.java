@@ -119,8 +119,19 @@ public class EditProfileActivity extends AppCompatActivity {
 
         boolean updated = databaseHelper.updateUserDetails(currentUsername, newUsername, newEmail, newPassword);
         if (updated) {
+            // Update logged-in user if username changed
+            if (!currentUsername.equals(newUsername)) {
+                databaseHelper.saveLoggedInUser(this, newUsername);
+            }
             Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
-            currentUsername = newUsername;  // Update currentUsername if username changed
+
+            // Send updated info back to calling fragment/activity
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("username", newUsername);
+            resultIntent.putExtra("email", newEmail);
+            setResult(RESULT_OK, resultIntent);
+
+            currentUsername = newUsername;  // Update currentUsername internally
             finish();
         } else {
             Toast.makeText(this, "Failed to update profile!", Toast.LENGTH_SHORT).show();
